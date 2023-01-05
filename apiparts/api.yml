@@ -1,0 +1,94 @@
+openapi: 3.0.0
+
+info:
+  # TODO update
+  title: Epixel CRM
+  description: |
+    Epixel CRM OpenAPI sepcification.
+    ## Read-only mode
+    Read only mode is currently triggered using the environment variable
+    `EPICRM_READONLY`. The API backends will only allow `GET` and `OPTIONS`
+    methods in this mode. For other methods, status 500 will be returned with
+    the error code `READ_ONLY_MODE`. This means logging in will also be
+    disabled, but those who already have an access token can continue doing read
+    operations.
+  version: 0.1.0
+
+# TODO doc under codebase maintenance checklist: find and remove unused components
+components:
+  # XXX Duplicated from elsewhere for the doc generator
+  securitySchemes:
+    basicAuthLoginOnly:
+      type: http
+      scheme: basic
+    clientIdAuthLoginOnly:
+      type: apiKey
+      in: header
+      name: X-CLIENT-ID
+    clientSecretAuthLoginOnly:
+      type: apiKey
+      in: header
+      name: X-CLIENT-SECRET
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+  parameters:
+    businessId:
+      name: businessId
+      in: path
+      required: true
+      description: ID of the business
+      schema:
+        type: string
+    businessIdQueryMustParam:
+      name: businessId
+      in: query
+      required: true
+      description: ID of the business
+      schema:
+        type: string
+    businessIdQueryOptParam:
+      name: businessId
+      in: query
+      description: ID of the business
+      schema:
+        type: string
+    tenantId:
+      name: tenantId
+      in: path
+      required: true
+      description: ID of the tenant
+      schema:
+        type: string
+    tenantIdQueryMustParam:
+      name: tenantId
+      in: query
+      required: true
+      description: ID of the tenant
+      schema:
+        type: string
+    tenantIdQueryOptParam:
+      name: tenantId
+      in: query
+      description: ID of the tenant
+      schema:
+        type: string
+  schemas:
+    ArrayOfPermissions:
+      type: array
+      items:
+        type: string
+tags:
+  - name: unauth
+    description: Endpoints for the unauthenticated
+  - name: auth
+    description: Everything about authentication
+  - name: user
+    description: Everything about users
+  - name: org
+    description: Everything about organizations
+  - name: loyalty
+    description: Everything about loyalty
+  - name: unsorted
+    description: Unsorted endpoints
